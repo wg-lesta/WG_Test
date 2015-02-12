@@ -14,7 +14,6 @@ QT5_WRAP_UI(EDITOR_UIS_FILES
 set(EDITOR_HEADER_FILES 
     ${EDITOR_HEADER_DIR}/Editor.h
     ${EDITOR_HEADER_DIR}/LevelScene.h
-    ${EDITOR_HEADER_DIR}/LevelSceneObject.h
     ${EDITOR_HEADER_DIR}/PropertyRequests.h
     ${EDITOR_HEADER_DIR}/PropertyDelegate.h
     ${EDITOR_HEADER_DIR}/PropertyPopulate.h
@@ -24,7 +23,6 @@ set(EDITOR_SOURCE_FILES
     ${EDITOR_SOURCE_DIR}/main.cpp
     ${EDITOR_SOURCE_DIR}/Editor.cpp
     ${EDITOR_SOURCE_DIR}/LevelScene.cpp
-    ${EDITOR_SOURCE_DIR}/LevelSceneObject.cpp
     ${EDITOR_SOURCE_DIR}/PropertyDelegate.cpp
     ${EDITOR_SOURCE_DIR}/PropertyPopulate.cpp
     ${EDITOR_SOURCE_DIR}/PropertyDeliver.cpp)

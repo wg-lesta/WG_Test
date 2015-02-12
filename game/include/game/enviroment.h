@@ -42,11 +42,13 @@ namespace game
         using prototypes_t = std::vector<prototype>;
         using const_iterator = prototypes_t::const_iterator;
 
+        enviroment();
+
         bool load(std::istream & is);
 
         const std::string & get_version() const;
         const std::string & get_tileset() const;
-        size get_tailsize() const;
+        size get_tilesize() const;
 
         void request_property(const std::string & name, const std::string & protoname,
             property_read_visitor & visitor) const;
@@ -64,6 +66,8 @@ namespace game
         }
         
         prototype create_prototype(const std::string & name) const;
+
+        bool empty() const;
 
     private:
 

@@ -13,6 +13,7 @@ namespace Ui
 
 class LevelScene;
 class QTreeWidgetItem;
+class QListWidgetItem;
 
 class Editor : public QMainWindow
 {
@@ -25,6 +26,7 @@ public:
 signals:
 
     void levelCreated();
+    void propertiesClear();
 
 private slots:
 
@@ -34,11 +36,10 @@ private slots:
 
     void sceneObjectSelected(int id);
     void sceneObjectRemoved(int id);
-    void sceneObjectMoved(int id, const game::point & pos);
-
-    void sceneCellSelected(const game::point&);
+    void sceneError(int error);
 
     void propertyChanged(QTreeWidgetItem*, int);
+    void prototypeChanged(QListWidgetItem*, QListWidgetItem*);
 
 private:
 
@@ -47,27 +48,18 @@ private:
     void setupMenu();
     void setupStatusbar();
     void setupView();
-    void setupTilset();
     void setupPrototypes();
     void setupProperties();
     void setupLevel();
-
-    void addObjectToScene(const game::object & obj, bool isSelected = false);
-    bool canAddObjectToScene(const std::string & protoname);
-
-    bool isPositionOccupied(const game::point & position) const;
 
 private:
 
     Ui::Editor *ui;
 
-    QPixmap tileset;
     LevelScene * scene;
 
     game::enviroment enviroment;
     game::level level;
-
-    int selectedId;
 };
 
 #endif //__EDITOR_INCLUDED__

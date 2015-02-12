@@ -8,6 +8,11 @@
 
 namespace game
 {
+    enviroment::enviroment()
+        :version("1.0")
+    {
+
+    }
     const std::string & enviroment::get_version() const
     {
         return version;
@@ -18,9 +23,14 @@ namespace game
         return tileset;
     }
 
-    size enviroment::get_tailsize() const
+    size enviroment::get_tilesize() const
     {
         return tilesize;
+    }
+
+    bool enviroment::empty() const
+    {
+        return tilesize.empty();
     }
 
     enviroment::const_iterator enviroment::find_prototype(const std::string name) const

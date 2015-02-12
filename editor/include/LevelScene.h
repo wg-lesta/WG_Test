@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 
 class LevelSceneObject;
+class QImage;
 
 class LevelScene : public QGraphicsScene
 {
@@ -12,21 +13,32 @@ class LevelScene : public QGraphicsScene
 
 public:
 
-    LevelScene(QSize sizeLivel, QSize sizeTile);
+    enum SceneError
+    {
+        errorPrototypeEmpty,
+        errorObjectUniqueness
+    };
+
+    LevelScene(game::level * level, game::enviroment * env, QObject *parent = 0);
     LevelSceneObject * addObject(const game::object & obj, const QPixmap & tileset);
 
-    QPointF closestCellPosition(const QPointF & pos) const;
+    int selectedObject() const;
 
-    QPointF objectToScene(const game::point & pos);
-    game::point sceneToObject(const QPointF & pos);
+    void setPrototype(const std::string &);
 
 signals:
 
-    void cellSelected(const game::point & position);
+    void sceneObjectAdded(int id);
+    void sceneObjectSelected(int id);
+    void sceneObjectRemoved(int id);
+    void sceneObjectMoved(int id, const game::point & pos);
+    void sceneObjectChanged(int id);
+    void sceneError(int error);
 
 protected:
 
     void drawBackground(QPainter *painter, const QRectF &rect) Q_DECL_OVERRIDE;
+    void drawForeground(QPainter *painter, const QRectF &rect) Q_DECL_OVERRIDE;
 
     void mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent) Q_DECL_OVERRIDE;
     void mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent) Q_DECL_OVERRIDE;
@@ -35,17 +47,28 @@ protected:
 
 private:
 
-    void createActiveCell();
+    bool isUniquenessPrototype(const std::string & name) const;
+    
+    int objectByPosition(const game::point & position) const;
+
+    QPointF closestCellPosition(const QPointF & pos) const;
+
+    QPointF objectToScene(const game::point & pos);
+    game::point sceneToObject(const QPointF & pos);
 
 private:
+    
+    game::level * level;
+    game::enviroment * enviroment;
 
-    QSize sizeLevel;
-    QSize sizeTile;
+    std::string protoname;
+
+    QImage tileset;
 
     QTransform transformToScene;
     QTransform transformToObject;
 
-    QGraphicsPixmapItem * activeCell;
+    int idSelected;
 };
 
 #endif // __LEVEL_SCENE_INCLUDED__
