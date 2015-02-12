@@ -50,10 +50,7 @@ namespace game
         const std::string & get_tileset() const;
         size get_tilesize() const;
 
-        void request_property(const std::string & name, const std::string & protoname,
-            property_read_visitor & visitor) const;
-
-        void request_properties(const std::string & protoname, 
+        void request_property(const std::string & protoname,
             property_read_visitor & visitor) const;
         
         template<typename _Func>

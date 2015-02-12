@@ -11,11 +11,16 @@ namespace game
         // для доступа к свойствам используем 
         // двойную диспетчеризацию вместо RTTI
 
+        struct property_visitor_base
+        {
+            virtual const char * name() { return nullptr; }
+        };
+
         template<typename... _Types>
         struct property_write_visitor;
 
         template<typename _T>
-        struct property_write_visitor<_T>
+        struct property_write_visitor<_T> : public property_visitor_base
         {
             virtual void visit(_T & concreate_prop) {}
         };
@@ -31,7 +36,7 @@ namespace game
         struct property_read_visitor;
 
         template<typename _T>
-        struct property_read_visitor<_T>
+        struct property_read_visitor<_T> : public property_visitor_base
         {
             virtual void visit(const _T & concreate_prop) const {}
         };

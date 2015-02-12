@@ -5,7 +5,7 @@
 #include "PropertyRequests.h"
 #include "PropertyDelegate.h"
 #include "PropertyPopulate.h"
-#include "PropertyDeliver.h"
+#include "PropertyApply.h"
 #include "PropertyRoles.h"
 
 #include <fstream>
@@ -74,13 +74,14 @@ void Editor::propertyChanged(QTreeWidgetItem * item, int column)
 {
     if (scene)
     {
-        QString name = item->data(1, PropertyRole::roleName).toString();
+        std::string name = item->data(1, PropertyRole::roleName).toString().toStdString();
+        
         level.write_object(scene->selectedObject(), [&item, &name](game::object & obj)
         {
-            propertyDeliver visitor(item);
-            obj.accept(name.toStdString(), visitor);
+            propertyApply visitor(item->data(1, PropertyRole::roleData));
+            obj.accept(name, visitor);
         });
-
+       
         scene->update();
     }
 }
@@ -184,11 +185,11 @@ void Editor::setupPrototypes()
     enviroment.foreach_prototype([&tileset, this](const game::prototype & proto)
     {
         supportPosition position;
-        proto.accept("Position", position);
+        proto.accept(position);
         if (position.supported())
         {
             readTile visitor;
-            proto.accept("Tile", visitor);
+            proto.accept(visitor);
 
             game::point posTile = visitor.get_tile();
             game::size  sizeTile = enviroment.get_tilesize();

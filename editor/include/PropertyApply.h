@@ -1,16 +1,16 @@
-#ifndef __PROPERTY_DELIVER_INCLUDED__
-#define __PROPERTY_DELIVER_INCLUDED__
+#ifndef __PROPERTY_APPLY_INCLUDED__
+#define __PROPERTY_APPLY_INCLUDED__
+
+#include <QVariant>
 
 #include <game/forward.h>
 #include <game/property.h>
 
-class QTreeWidgetItem;
-
-class propertyDeliver : public game::property_write_visitor
+class propertyApply : public game::property_write_visitor
 {
 public:
 
-    explicit propertyDeliver(QTreeWidgetItem * item);
+    explicit propertyApply(const QVariant & data);
 
     void visit(game::property_int & prop) override;
     void visit(game::property_float & prop) override;
@@ -20,7 +20,7 @@ public:
 
 private:
 
-    QTreeWidgetItem * item;
+    QVariant data;
 };
 
-#endif //__PROPERTY_DELIVER_INCLUDED__
+#endif //__PROPERTY_APPLY_INCLUDED__

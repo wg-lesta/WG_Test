@@ -72,14 +72,24 @@ namespace game
 
     void prototype::accept(property_write_visitor & visitor)
     {
-        for (property_ptr & ptr : properties)
-            ptr->accept(visitor);
+        if (visitor.name())
+            accept(visitor.name(), visitor);
+        else
+        {
+            for (property_ptr & ptr : properties)
+                ptr->accept(visitor);
+        }
     }
 
     void prototype::accept(property_read_visitor & visitor) const
     {
-        for (const property_ptr & ptr : properties)
-            ptr->accept(visitor);
+        if (visitor.name())
+            accept(visitor.name(), visitor);
+        else
+        {
+            for (const property_ptr & ptr : properties)
+                ptr->accept(visitor);
+        }
     }
 
     void prototype::accept(const std::string & name, property_write_visitor & visitor)

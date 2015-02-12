@@ -53,15 +53,7 @@ namespace game
         return prototype{};
     }
 
-    void enviroment::request_property(const std::string & name, const std::string & protoname,
-        property_read_visitor & visitor) const
-    {
-        prototypes_t::const_iterator it = find_prototype(protoname);
-        if (it != prototypes.cend())
-            it->accept(name, visitor);
-    }
-
-    void enviroment::request_properties(const std::string & protoname,
+    void enviroment::request_property(const std::string & protoname,
         property_read_visitor & visitor) const
     {
         prototypes_t::const_iterator it = find_prototype(protoname);

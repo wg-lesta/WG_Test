@@ -6,6 +6,8 @@
 
 struct readTile : public game::property_read_visitor
 {
+    const char * name() override { return "Tile"; }
+
     game::point get_tile() const
     {
         return tile;
@@ -24,6 +26,8 @@ struct readUniqueness : public game::property_read_visitor
 {
     readUniqueness() : uniqueness(false) {}
 
+    const char * name() override { return "Uniqueness"; }
+
     bool is_uniqueness() const
     {
         return uniqueness;
@@ -40,6 +44,8 @@ private:
 
 struct readPosition : public game::property_read_visitor
 {
+    const char * name() override { return "Position"; }
+
     game::point get_position() const
     {
         return position;
@@ -56,6 +62,8 @@ private:
 
 struct writePosition : public game::property_write_visitor
 {
+    const char * name() override { return "Position"; }
+
     writePosition(const game::point & pos)
         : position(pos) {}
 
@@ -70,6 +78,8 @@ private:
 
 struct supportPosition : public game::property_read_visitor
 {
+    const char * name() override { return "Position"; }
+
     supportPosition() : support(false) {}
 
     bool supported() const

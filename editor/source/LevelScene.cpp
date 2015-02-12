@@ -81,10 +81,10 @@ void LevelScene::drawForeground(QPainter *painter, const QRectF &rect)
     level->foreach_objects([this, &painter](const game::object & obj)
     {
         readPosition propertyPos;
-        obj.accept("Position", propertyPos);
+        obj.accept(propertyPos);
 
         readTile propertyTile;
-        obj.accept("Tile", propertyTile);
+        obj.accept(propertyTile);
 
         QPointF pos(propertyPos.get_position().x, propertyPos.get_position().y);
         pos = pos * transformToScene;
@@ -205,7 +205,7 @@ game::point LevelScene::sceneToObject(const QPointF & pos)
 bool LevelScene::isUniquenessPrototype(const std::string & name) const
 {
     readUniqueness visitor;
-    enviroment->request_property("Uniqueness", protoname, visitor);
+    enviroment->request_property(protoname, visitor);
     if (visitor.is_uniqueness())
     {
         return level->foreach_objects([&name](const game::object & obj)
@@ -222,7 +222,7 @@ int LevelScene::objectByPosition(const game::point & position) const
     level->foreach_objects([&idObject, &position](const game::object & obj)
     {
         readPosition visitor;
-        obj.accept("Position", visitor);
+        obj.accept(visitor);
         if (visitor.get_position() == position)
         {
             idObject = obj.get_id();
