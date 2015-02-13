@@ -81,8 +81,6 @@ void Editor::propertyChanged(QTreeWidgetItem * item, int column)
             propertyApply visitor(item->data(1, PropertyRole::roleData));
             obj.accept(name, visitor);
         });
-       
-        scene->update();
     }
 }
 

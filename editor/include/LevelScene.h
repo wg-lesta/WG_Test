@@ -26,6 +26,10 @@ public:
 
     void setPrototype(const std::string &);
 
+private slots:
+
+    void foregroundInvalidate();
+
 signals:
 
     void sceneObjectAdded(int id);

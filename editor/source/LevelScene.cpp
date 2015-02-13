@@ -3,6 +3,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
 #include <QImage>
+#include <QTimer>
 
 #include <game/level.h>
 #include <game/enviroment.h>
@@ -26,6 +27,10 @@ LevelScene::LevelScene(game::level * level, game::enviroment * env, QObject *par
 
     tileset.load(QString::fromStdString(enviroment->get_tileset()));
     tileset = tileset.mirrored();
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(foregroundInvalidate()));
+    timer->start(1000/60);
 }
 
 void LevelScene::setPrototype(const std::string & protoname)
@@ -36,6 +41,11 @@ void LevelScene::setPrototype(const std::string & protoname)
 int LevelScene::selectedObject() const
 {
     return idSelected;
+}
+
+void LevelScene::foregroundInvalidate()
+{
+    invalidate(QRectF(), QGraphicsScene::ForegroundLayer);
 }
 
 QPointF LevelScene::closestCellPosition(const QPointF & pos) const
@@ -135,7 +145,6 @@ void LevelScene::mouseMoveEvent(QGraphicsSceneMouseEvent * mouseEvent)
                 });
                 emit sceneObjectChanged(idSelected);
                 emit sceneObjectMoved(idSelected, objectPos);
-                this->update();
             }
         }
     }
@@ -175,8 +184,6 @@ void LevelScene::mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent)
 
         idSelected = idObject;
         emit sceneObjectSelected(idSelected);
-
-        this->update();
     }
 }
 
@@ -187,7 +194,6 @@ void LevelScene::keyPressEvent(QKeyEvent *event)
     {
         level->remove(idSelected);
         emit sceneObjectRemoved(idSelected);
-        this->update();
     }
 }
 
