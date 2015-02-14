@@ -4,7 +4,6 @@
 #include <game/forward.h>
 #include <QGraphicsScene>
 
-class LevelSceneObject;
 class QImage;
 
 class LevelScene : public QGraphicsScene
@@ -20,7 +19,6 @@ public:
     };
 
     LevelScene(game::level * level, game::enviroment * env, QObject *parent = 0);
-    LevelSceneObject * addObject(const game::object & obj, const QPixmap & tileset);
 
     int selectedObject() const;
 

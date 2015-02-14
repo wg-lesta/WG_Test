@@ -2,7 +2,6 @@
 #define __EDITOR_INCLUDED__
 
 #include <QMainWindow>
-#include <qmainwindow.h>
 #include <game/enviroment.h>
 #include <game/level.h>
 
